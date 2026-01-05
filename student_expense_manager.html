@@ -12,18 +12,21 @@
         }
 
         :root {
-            --primary: #4a90e2;
-            --secondary: #50c878;
-            --danger: #e74c3c;
-            --warning: #f39c12;
-            --dark: #2c3e50;
-            --light: #ecf0f1;
-            --success: #27ae60;
+            --primary: #1e40af;
+            --secondary: #059669;
+            --danger: #dc2626;
+            --warning: #f59e0b;
+            --dark: #1f2937;
+            --light: #f3f4f6;
+            --success: #10b981;
+            --bg-primary: #0f172a;
+            --bg-secondary: #1e293b;
+            --accent: #3b82f6;
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
             min-height: 100vh;
             padding: 20px;
         }
@@ -38,10 +41,11 @@
         }
 
         .header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
             color: white;
             padding: 30px;
             text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
 
         .header h1 {
@@ -132,9 +136,9 @@
         }
 
         .btn-primary:hover {
-            background: #357abd;
+            background: #1e3a8a;
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(74, 144, 226, 0.3);
+            box-shadow: 0 5px 15px rgba(30, 64, 175, 0.4);
         }
 
         .btn-secondary {
@@ -171,7 +175,7 @@
         }
 
         .stat-card {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
             color: white;
             padding: 25px;
             border-radius: 15px;
@@ -180,15 +184,15 @@
         }
 
         .stat-card.income {
-            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            background: linear-gradient(135deg, #059669 0%, #10b981 100%);
         }
 
         .stat-card.expense {
-            background: linear-gradient(135deg, #ee0979 0%, #ff6a00 100%);
+            background: linear-gradient(135deg, #dc2626 0%, #ef4444 100%);
         }
 
         .stat-card.balance {
-            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            background: linear-gradient(135deg, #0891b2 0%, #06b6d4 100%);
         }
 
         .stat-card h3 {
@@ -421,6 +425,38 @@
             border-radius: 8px;
             font-size: 1em;
         }
+
+        .quick-amounts {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 0;
+        }
+
+        .quick-amount-btn {
+            padding: 12px;
+            border: 2px solid #e5e7eb;
+            background: white;
+            color: #374151;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            font-size: 0.95em;
+        }
+
+        .quick-amount-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: 0 3px 10px rgba(30, 64, 175, 0.15);
+        }
+
+        .quick-amount-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
     </style>
 </head>
 <body>
@@ -476,7 +512,15 @@
 
                     <div class="form-group">
                         <label>Amount ($)</label>
-                        <input type="number" id="amount" step="0.01" min="0.01" placeholder="0.00" required>
+                        <div class="quick-amounts">
+                            <button type="button" class="quick-amount-btn" data-amount="5">$5</button>
+                            <button type="button" class="quick-amount-btn" data-amount="10">$10</button>
+                            <button type="button" class="quick-amount-btn" data-amount="20">$20</button>
+                            <button type="button" class="quick-amount-btn" data-amount="50">$50</button>
+                            <button type="button" class="quick-amount-btn" data-amount="100">$100</button>
+                            <button type="button" class="quick-amount-btn active" data-amount="custom">Custom</button>
+                        </div>
+                        <input type="number" id="amount" step="0.01" min="0.01" placeholder="0.00" required style="margin-top: 10px;">
                     </div>
 
                     <div class="form-group">
@@ -499,8 +543,8 @@
                     </div>
 
                     <div class="form-group">
-                        <label>Description</label>
-                        <input type="text" id="description" placeholder="e.g., Lunch at cafeteria" required>
+                        <label>Description <span id="descriptionRequired" style="display: none; color: var(--danger);">*</span></label>
+                        <input type="text" id="description" placeholder="e.g., Lunch at cafeteria">
                     </div>
 
                     <div class="form-group">
@@ -571,6 +615,57 @@
 
         // Set today's date as default
         document.getElementById('date').valueAsDate = new Date();
+
+        // Quick amount buttons functionality
+        const amountInput = document.getElementById('amount');
+        const quickAmountBtns = document.querySelectorAll('.quick-amount-btn');
+
+        quickAmountBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                // Remove active class from all buttons
+                quickAmountBtns.forEach(b => b.classList.remove('active'));
+                // Add active class to clicked button
+                this.classList.add('active');
+
+                const amount = this.dataset.amount;
+                if(amount === 'custom') {
+                    amountInput.value = '';
+                    amountInput.focus();
+                } else {
+                    amountInput.value = amount;
+                }
+            });
+        });
+
+        // When user types in custom amount, activate custom button
+        amountInput.addEventListener('input', function() {
+            const customBtn = document.querySelector('.quick-amount-btn[data-amount="custom"]');
+            const isQuickAmount = Array.from(quickAmountBtns).some(btn => {
+                return btn.dataset.amount !== 'custom' && btn.dataset.amount === this.value;
+            });
+
+            if(!isQuickAmount && this.value !== '') {
+                quickAmountBtns.forEach(b => b.classList.remove('active'));
+                customBtn.classList.add('active');
+            }
+        });
+
+        // Category change handler - make description required only for "other"
+        const categorySelect = document.getElementById('category');
+        const descriptionInput = document.getElementById('description');
+        const descriptionRequired = document.getElementById('descriptionRequired');
+
+        categorySelect.addEventListener('change', function() {
+            if(this.value === 'other') {
+                descriptionInput.setAttribute('required', 'required');
+                descriptionRequired.style.display = 'inline';
+                descriptionInput.placeholder = "Please specify what this is for";
+            } else {
+                descriptionInput.removeAttribute('required');
+                descriptionRequired.style.display = 'none';
+                descriptionInput.placeholder = "e.g., Lunch at cafeteria (optional)";
+            }
+        });
 
         // Set budget value
         document.getElementById('monthlyBudget').value = monthlyBudget || '';
