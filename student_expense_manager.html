@@ -12,21 +12,24 @@
         }
 
         :root {
-            --primary: #1e40af;
-            --secondary: #059669;
-            --danger: #dc2626;
-            --warning: #f59e0b;
-            --dark: #1f2937;
-            --light: #f3f4f6;
-            --success: #10b981;
-            --bg-primary: #0f172a;
-            --bg-secondary: #1e293b;
-            --accent: #3b82f6;
+            --primary: #006FCF;
+            --secondary: #00A3E0;
+            --danger: #DC143C;
+            --warning: #FFA500;
+            --dark: #002663;
+            --light: #F7F7F7;
+            --success: #00875A;
+            --bg-primary: #001A3D;
+            --bg-secondary: #002663;
+            --accent: #0090D9;
+            --amex-blue: #006FCF;
+            --amex-light-blue: #00A3E0;
+            --amex-navy: #002663;
         }
 
         body {
-            font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            font-family: 'BentonSans', 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #001A3D 0%, #002663 50%, #003D82 100%);
             min-height: 100vh;
             padding: 20px;
         }
@@ -41,7 +44,7 @@
         }
 
         .header {
-            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+            background: linear-gradient(135deg, #006FCF 0%, #00A3E0 100%);
             color: white;
             padding: 30px;
             text-align: center;
@@ -80,11 +83,8 @@
             display: flex;
             align-items: center;
             gap: 10px;
-        }
-
-        .card h2::before {
-            content: '💰';
-            font-size: 1.2em;
+            font-weight: 700;
+            letter-spacing: -0.5px;
         }
 
         .form-group {
@@ -136,9 +136,9 @@
         }
 
         .btn-primary:hover {
-            background: #1e3a8a;
+            background: #0056A3;
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(30, 64, 175, 0.4);
+            box-shadow: 0 5px 15px rgba(0, 111, 207, 0.4);
         }
 
         .btn-secondary {
@@ -175,24 +175,43 @@
         }
 
         .stat-card {
-            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+            background: linear-gradient(135deg, #006FCF 0%, #0090D9 100%);
             color: white;
             padding: 25px;
             border-radius: 15px;
             text-align: center;
             box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 15px 30px rgba(0, 111, 207, 0.4);
         }
 
         .stat-card.income {
-            background: linear-gradient(135deg, #059669 0%, #10b981 100%);
+            background: linear-gradient(135deg, #00875A 0%, #00A86B 100%);
+        }
+
+        .stat-card.income:hover {
+            box-shadow: 0 15px 30px rgba(0, 135, 90, 0.4);
         }
 
         .stat-card.expense {
-            background: linear-gradient(135deg, #dc2626 0%, #ef4444 100%);
+            background: linear-gradient(135deg, #DC143C 0%, #FF4560 100%);
+        }
+
+        .stat-card.expense:hover {
+            box-shadow: 0 15px 30px rgba(220, 20, 60, 0.4);
         }
 
         .stat-card.balance {
-            background: linear-gradient(135deg, #0891b2 0%, #06b6d4 100%);
+            background: linear-gradient(135deg, #00A3E0 0%, #4FC3F7 100%);
+        }
+
+        .stat-card.balance:hover {
+            box-shadow: 0 15px 30px rgba(0, 163, 224, 0.4);
         }
 
         .stat-card h3 {
@@ -275,15 +294,15 @@
             font-weight: 600;
         }
 
-        .category-food { background: #ffe5b4; color: #d97706; }
-        .category-transport { background: #dbeafe; color: #2563eb; }
-        .category-education { background: #dcfce7; color: #16a34a; }
-        .category-entertainment { background: #fce7f3; color: #db2777; }
-        .category-housing { background: #f3e8ff; color: #9333ea; }
-        .category-other { background: #e5e7eb; color: #6b7280; }
-        .category-scholarship { background: #d1fae5; color: #059669; }
-        .category-allowance { background: #dbeafe; color: #0284c7; }
-        .category-parttime { background: #fef3c7; color: #d97706; }
+        .category-food { background: #FFE5B4; color: #FFA500; }
+        .category-transport { background: #CCE7F5; color: #006FCF; }
+        .category-education { background: #D4EDDA; color: #00875A; }
+        .category-entertainment { background: #FFD6E0; color: #DC143C; }
+        .category-housing { background: #E3F2FD; color: #0090D9; }
+        .category-other { background: #E8E8E8; color: #5A5A5A; }
+        .category-scholarship { background: #D4EDDA; color: #00875A; }
+        .category-allowance { background: #CCE7F5; color: #006FCF; }
+        .category-parttime { background: #FFE5B4; color: #FFA500; }
 
         .full-width {
             grid-column: 1 / -1;
@@ -320,6 +339,7 @@
         .filter-btn:hover {
             background: var(--primary);
             color: white;
+            box-shadow: 0 3px 10px rgba(0, 111, 207, 0.3);
         }
 
         .budget-section {
@@ -449,7 +469,7 @@
             border-color: var(--primary);
             color: var(--primary);
             transform: translateY(-2px);
-            box-shadow: 0 3px 10px rgba(30, 64, 175, 0.15);
+            box-shadow: 0 3px 10px rgba(0, 111, 207, 0.15);
         }
 
         .quick-amount-btn.active {
@@ -620,19 +640,36 @@
         const amountInput = document.getElementById('amount');
         const quickAmountBtns = document.querySelectorAll('.quick-amount-btn');
 
+        let lastClickedBtn = null;
+
         quickAmountBtns.forEach(btn => {
             btn.addEventListener('click', function() {
-                // Remove active class from all buttons
-                quickAmountBtns.forEach(b => b.classList.remove('active'));
-                // Add active class to clicked button
-                this.classList.add('active');
-
                 const amount = this.dataset.amount;
+                
                 if(amount === 'custom') {
+                    // Remove active class from all buttons
+                    quickAmountBtns.forEach(b => b.classList.remove('active'));
+                    // Add active class to custom button
+                    this.classList.add('active');
                     amountInput.value = '';
                     amountInput.focus();
+                    lastClickedBtn = null;
                 } else {
-                    amountInput.value = amount;
+                    // Check if clicking the same button again
+                    if(lastClickedBtn === this && amountInput.value !== '') {
+                        // Add to existing amount
+                        const currentAmount = parseFloat(amountInput.value) || 0;
+                        const addAmount = parseFloat(amount);
+                        amountInput.value = (currentAmount + addAmount).toFixed(2);
+                    } else {
+                        // First click or different button - set the amount
+                        amountInput.value = amount;
+                    }
+                    
+                    // Update active state
+                    quickAmountBtns.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    lastClickedBtn = this;
                 }
             });
         });
@@ -647,6 +684,7 @@
             if(!isQuickAmount && this.value !== '') {
                 quickAmountBtns.forEach(b => b.classList.remove('active'));
                 customBtn.classList.add('active');
+                lastClickedBtn = null; // Reset tracking when manually typing
             }
         });
 
@@ -681,29 +719,53 @@
         document.getElementById('transactionForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
-            const transaction = {
-                id: Date.now(),
-                type: document.getElementById('type').value,
-                amount: parseFloat(document.getElementById('amount').value),
-                category: document.getElementById('category').value,
-                description: document.getElementById('description').value,
-                date: document.getElementById('date').value
-            };
+            if(editingTransactionId) {
+                // Update existing transaction
+                const index = transactions.findIndex(t => t.id === editingTransactionId);
+                if(index !== -1) {
+                    transactions[index] = {
+                        id: editingTransactionId,
+                        type: document.getElementById('type').value,
+                        amount: parseFloat(document.getElementById('amount').value),
+                        category: document.getElementById('category').value,
+                        description: document.getElementById('description').value,
+                        date: document.getElementById('date').value
+                    };
+                    
+                    localStorage.setItem('transactions', JSON.stringify(transactions));
+                    
+                    // Show success message
+                    alert('Transaction updated successfully!');
+                    
+                    // Cancel edit mode
+                    cancelEdit();
+                }
+            } else {
+                // Add new transaction
+                const transaction = {
+                    id: Date.now(),
+                    type: document.getElementById('type').value,
+                    amount: parseFloat(document.getElementById('amount').value),
+                    category: document.getElementById('category').value,
+                    description: document.getElementById('description').value,
+                    date: document.getElementById('date').value
+                };
 
-            transactions.unshift(transaction);
-            localStorage.setItem('transactions', JSON.stringify(transactions));
+                transactions.unshift(transaction);
+                localStorage.setItem('transactions', JSON.stringify(transactions));
 
-            // Reset form
-            this.reset();
-            document.getElementById('date').valueAsDate = new Date();
+                // Reset form
+                this.reset();
+                document.getElementById('date').valueAsDate = new Date();
+
+                // Show success message
+                alert('Transaction added successfully!');
+            }
 
             // Update UI
             updateDashboard();
             displayTransactions();
             updateCharts();
-
-            // Show success message
-            alert('Transaction added successfully!');
         });
 
         // Display transactions
@@ -760,18 +822,71 @@
             }
         }
 
-        // Edit transaction (simplified - adds to form)
+        // Track if we're editing
+        let editingTransactionId = null;
+
+        // Edit transaction
         function editTransaction(id) {
             const transaction = transactions.find(t => t.id === id);
             if (!transaction) return;
 
+            // Populate form with transaction data
             document.getElementById('type').value = transaction.type;
             document.getElementById('amount').value = transaction.amount;
             document.getElementById('category').value = transaction.category;
             document.getElementById('description').value = transaction.description;
             document.getElementById('date').value = transaction.date;
 
-            deleteTransaction(id);
+            // Update quick amount buttons to show custom
+            quickAmountBtns.forEach(b => b.classList.remove('active'));
+            document.querySelector('.quick-amount-btn[data-amount="custom"]').classList.add('active');
+
+            // Set editing mode
+            editingTransactionId = id;
+
+            // Update submit button
+            const submitBtn = document.querySelector('#transactionForm button[type="submit"]');
+            submitBtn.textContent = 'Update Transaction';
+            submitBtn.style.background = 'var(--warning)';
+
+            // Scroll to form
+            document.querySelector('#transactionForm').scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+            // Show cancel button if not exists
+            if(!document.getElementById('cancelEditBtn')) {
+                const cancelBtn = document.createElement('button');
+                cancelBtn.type = 'button';
+                cancelBtn.id = 'cancelEditBtn';
+                cancelBtn.className = 'btn btn-secondary';
+                cancelBtn.textContent = 'Cancel Edit';
+                cancelBtn.style.marginTop = '10px';
+                cancelBtn.onclick = cancelEdit;
+                submitBtn.parentNode.appendChild(cancelBtn);
+            }
+        }
+
+        // Cancel edit mode
+        function cancelEdit() {
+            editingTransactionId = null;
+            
+            // Reset form
+            document.getElementById('transactionForm').reset();
+            document.getElementById('date').valueAsDate = new Date();
+            
+            // Reset submit button
+            const submitBtn = document.querySelector('#transactionForm button[type="submit"]');
+            submitBtn.textContent = 'Add Transaction';
+            submitBtn.style.background = 'var(--primary)';
+            
+            // Remove cancel button
+            const cancelBtn = document.getElementById('cancelEditBtn');
+            if(cancelBtn) {
+                cancelBtn.remove();
+            }
+            
+            // Reset quick amount buttons
+            quickAmountBtns.forEach(b => b.classList.remove('active'));
+            document.querySelector('.quick-amount-btn[data-amount="custom"]').classList.add('active');
         }
 
         // Update dashboard
