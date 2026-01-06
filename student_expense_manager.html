@@ -102,11 +102,6 @@
             transform: translateY(-2px);
         }
 
-        .profile-name {
-            color: white;
-            font-weight: 600;
-            font-size: 1em;
-        }
 
         .modal {
             display: none;
@@ -224,15 +219,7 @@
             font-weight: bold;
             position: relative;
             overflow: hidden;
-            cursor: pointer;
-            transition: all 0.3s;
             border: 3px solid #2a2a2a;
-        }
-
-        .profile-avatar:hover {
-            transform: scale(1.05);
-            box-shadow: 0 5px 15px rgba(37, 99, 235, 0.6);
-            border-color: #3a3a3a;
         }
 
         .profile-avatar img {
@@ -244,28 +231,6 @@
             left: 0;
         }
 
-        .profile-avatar-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.6);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            transition: opacity 0.3s;
-            color: white;
-            font-size: 0.9em;
-            font-weight: 600;
-            z-index: 2;
-        }
-
-        .profile-avatar:hover .profile-avatar-overlay {
-            opacity: 1;
-        }
-
         .avatar-upload-btn {
             display: none;
         }
@@ -275,15 +240,9 @@
             z-index: 1;
         }
 
-        .profile-name-display {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
         .profile-avatar-small {
-            width: 35px;
-            height: 35px;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
             background: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);
             color: white;
@@ -291,15 +250,41 @@
             align-items: center;
             justify-content: center;
             font-weight: bold;
-            font-size: 0.9em;
+            font-size: 1em;
             overflow: hidden;
             border: 2px solid #2a2a2a;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .profile-avatar-small:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
+            border-color: #3a3a3a;
         }
 
         .profile-avatar-small img {
             width: 100%;
             height: 100%;
             object-fit: cover;
+        }
+
+        .change-photo-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+
+        .change-photo-btn:hover {
+            background: #1e40af;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
         }
 
         .remove-photo-btn {
@@ -310,12 +295,8 @@
             border-radius: 8px;
             cursor: pointer;
             font-size: 0.9em;
-            margin-top: 10px;
             transition: all 0.3s;
             font-weight: 600;
-            display: block;
-            margin-left: auto;
-            margin-right: auto;
         }
 
         .remove-photo-btn:hover {
@@ -568,6 +549,11 @@
         .btn-secondary {
             background: var(--secondary);
             color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
         }
 
         .btn-danger {
@@ -591,10 +577,43 @@
             transform: translateY(-2px);
         }
 
+        .custom-category-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            background: #2a2a2a;
+            border: 1px solid #3a3a3a;
+            border-radius: 20px;
+            color: #e0e0e0;
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+
+        .custom-category-remove {
+            background: #ef4444;
+            border: none;
+            color: white;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: all 0.2s;
+        }
+
+        .custom-category-remove:hover {
+            background: #dc2626;
+            transform: scale(1.1);
+        }
+
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
+            gap: 12px;
             transition: all 0.3s ease;
         }
 
@@ -641,7 +660,7 @@
         .stat-card {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            padding: 20px;
+            padding: 18px 12px;
             border-radius: 12px;
             text-align: center;
             box-shadow: 0 4px 12px rgba(0,0,0,0.15);
@@ -649,6 +668,7 @@
             cursor: pointer;
             position: relative;
             overflow: hidden;
+            min-width: 0;
         }
 
         .stat-card::before {
@@ -673,27 +693,27 @@
         }
 
         .stat-card.income {
-            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%);
         }
 
         .stat-card.income:hover {
-            box-shadow: 0 15px 30px rgba(67, 233, 123, 0.4);
+            box-shadow: 0 15px 30px rgba(107, 114, 128, 0.4);
         }
 
         .stat-card.expense {
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            background: linear-gradient(135deg, #9ca3af 0%, #6b7280 100%);
         }
 
         .stat-card.expense:hover {
-            box-shadow: 0 15px 30px rgba(240, 147, 251, 0.4);
+            box-shadow: 0 15px 30px rgba(156, 163, 175, 0.4);
         }
 
         .stat-card.balance {
-            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            background: linear-gradient(135deg, #4b5563 0%, #374151 100%);
         }
 
         .stat-card.balance:hover {
-            box-shadow: 0 15px 30px rgba(79, 172, 254, 0.4);
+            box-shadow: 0 15px 30px rgba(75, 85, 99, 0.4);
         }
 
         .stat-card h3 {
@@ -706,9 +726,29 @@
         }
 
         .stat-card p {
-            font-size: 1.8em;
+            font-size: 1.3em;
             font-weight: 700;
             margin: 0;
+            min-height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            padding: 0 5px;
+        }
+
+        @media (max-width: 1200px) {
+            .stat-card p {
+                font-size: 1.2em;
+            }
+        }
+
+        @media (max-width: 900px) {
+            .stat-card p {
+                font-size: 1.1em;
+            }
         }
 
         .transactions {
@@ -799,6 +839,13 @@
         .category-scholarship { background: #d1fae5; color: #10b981; font-weight: 600; }
         .category-allowance { background: #dbeafe; color: #3b82f6; font-weight: 600; }
         .category-parttime { background: #fef3c7; color: #f59e0b; font-weight: 600; }
+        
+        /* Default style for custom categories */
+        .category-tag {
+            background: #e0e7ff;
+            color: #4f46e5;
+            font-weight: 600;
+        }
 
         .full-width {
             grid-column: 1 / -1;
@@ -1336,8 +1383,8 @@
 
         .quick-amounts {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
-            gap: 10px;
+            grid-template-columns: repeat(auto-fit, minmax(75px, 1fr));
+            gap: 8px;
             margin-bottom: 0;
             transition: all 0.3s ease;
         }
@@ -1368,17 +1415,26 @@
             border-color: var(--primary);
             box-shadow: 0 3px 10px rgba(37, 99, 235, 0.4);
         }
+
+        .clear-amount-btn {
+            background: #ef4444 !important;
+            color: white !important;
+            border-color: #ef4444 !important;
+        }
+
+        .clear-amount-btn:hover {
+            background: #dc2626 !important;
+            border-color: #dc2626 !important;
+            box-shadow: 0 5px 15px rgba(239, 68, 68, 0.4) !important;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
             <div class="profile-section">
-                <div class="profile-name-display">
-                    <div class="profile-avatar-small" id="avatarSmall">
-                        <span id="avatarSmallText">S</span>
-                    </div>
-                    <span class="profile-name" id="profileNameDisplay">Student</span>
+                <div class="profile-avatar-small" id="avatarSmall">
+                    <span id="avatarSmallText">S</span>
                 </div>
                 <button class="profile-btn" onclick="openProfileModal()">Edit Profile</button>
             </div>
@@ -1436,21 +1492,22 @@
                 <form id="transactionForm">
                     <div class="form-group">
                         <label>Type</label>
-                        <select id="type" required>
+                        <select id="type" required onchange="updateCategoryOptions()">
                             <option value="expense">Expense</option>
                             <option value="income">Income</option>
                         </select>
                     </div>
 
                     <div class="form-group">
-                        <label>Amount ($)</label>
-                        <div class="quick-amounts">
-                            <button type="button" class="quick-amount-btn" data-amount="5">$5</button>
-                            <button type="button" class="quick-amount-btn" data-amount="10">$10</button>
-                            <button type="button" class="quick-amount-btn" data-amount="20">$20</button>
-                            <button type="button" class="quick-amount-btn" data-amount="50">$50</button>
-                            <button type="button" class="quick-amount-btn" data-amount="100">$100</button>
-                            <button type="button" class="quick-amount-btn active" data-amount="custom">Custom</button>
+                        <label>Amount (<span id="currencyLabel">$</span>)</label>
+                        <div class="quick-amounts" id="quickAmountsContainer">
+                            <button type="button" class="quick-amount-btn" data-amount="5"><span class="amount-symbol">$</span>5</button>
+                            <button type="button" class="quick-amount-btn" data-amount="10"><span class="amount-symbol">$</span>10</button>
+                            <button type="button" class="quick-amount-btn" data-amount="20"><span class="amount-symbol">$</span>20</button>
+                            <button type="button" class="quick-amount-btn" data-amount="50"><span class="amount-symbol">$</span>50</button>
+                            <button type="button" class="quick-amount-btn" data-amount="100"><span class="amount-symbol">$</span>100</button>
+                            <button type="button" class="quick-amount-btn" data-amount="custom">Custom</button>
+                            <button type="button" class="quick-amount-btn clear-amount-btn" onclick="clearAmount()">Clear</button>
                         </div>
                         <input type="number" id="amount" step="0.01" min="0.01" placeholder="0.00" required style="margin-top: 10px;">
                     </div>
@@ -1546,12 +1603,14 @@
                 <button class="close-btn" onclick="closeProfileModal()">&times;</button>
             </div>
             <div class="modal-body">
-                <div class="profile-avatar" id="avatarDisplay" onclick="document.getElementById('avatarUpload').click()">
+                <div class="profile-avatar" id="avatarDisplay">
                     <span class="profile-avatar-text" id="avatarText">S</span>
-                    <div class="profile-avatar-overlay">Change Photo</div>
                 </div>
                 <input type="file" id="avatarUpload" class="avatar-upload-btn" accept="image/*" onchange="handleAvatarUpload(event)">
-                <button type="button" class="remove-photo-btn" id="removePhotoBtn" onclick="removeProfilePhoto()" style="display: none;">Remove Photo</button>
+                <div style="display: flex; gap: 10px; justify-content: center; margin-bottom: 20px;">
+                    <button type="button" class="change-photo-btn" onclick="document.getElementById('avatarUpload').click()">Change Photo</button>
+                    <button type="button" class="remove-photo-btn" id="removePhotoBtn" onclick="removeProfilePhoto()" style="display: none;">Remove Photo</button>
+                </div>
                 <form class="profile-form" id="profileForm">
                     <div class="form-group">
                         <label>Full Name</label>
@@ -1572,6 +1631,40 @@
                     <div class="form-group">
                         <label>Student ID</label>
                         <input type="text" id="profileStudentId" placeholder="Your student ID">
+                    </div>
+                    <div class="form-group">
+                        <label>Currency</label>
+                        <select id="profileCurrency">
+                            <option value="USD">USD ($) - US Dollar</option>
+                            <option value="EUR">EUR (€) - Euro</option>
+                            <option value="GBP">GBP (£) - British Pound</option>
+                            <option value="JPY">JPY (¥) - Japanese Yen</option>
+                            <option value="INR">INR (₹) - Indian Rupee</option>
+                            <option value="CAD">CAD ($) - Canadian Dollar</option>
+                            <option value="AUD">AUD ($) - Australian Dollar</option>
+                            <option value="CNY">CNY (¥) - Chinese Yuan</option>
+                            <option value="CHF">CHF (Fr) - Swiss Franc</option>
+                            <option value="SGD">SGD ($) - Singapore Dollar</option>
+                            <option value="AED">AED (د.إ) - UAE Dirham</option>
+                            <option value="SAR">SAR (﷼) - Saudi Riyal</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Custom Categories</label>
+                        <div style="margin-bottom: 10px;">
+                            <div style="display: flex; gap: 10px; margin-bottom: 10px;">
+                                <input type="text" id="newCategoryInput" placeholder="Enter category name" style="flex: 1;">
+                                <select id="newCategoryType" style="width: 120px; padding: 10px; background: #0a0a0a; color: #e0e0e0; border: 2px solid #2a2a2a; border-radius: 8px;">
+                                    <option value="expense">Expense</option>
+                                    <option value="income">Income</option>
+                                </select>
+                                <button type="button" class="btn-secondary" onclick="addCustomCategory()" style="padding: 10px 20px; white-space: nowrap;">Add Category</button>
+                            </div>
+                        </div>
+                        <div id="customCategoriesList" style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px;">
+                            <!-- Custom categories will appear here -->
+                        </div>
                     </div>
                 </form>
             </div>
@@ -1594,8 +1687,58 @@
             phone: '',
             university: '',
             studentId: '',
-            avatar: null
+            avatar: null,
+            currency: 'USD',
+            customCategories: {
+                expense: [],
+                income: []
+            }
         };
+
+        // Currency symbols mapping
+        const currencySymbols = {
+            'USD': '$',
+            'EUR': '€',
+            'GBP': '£',
+            'JPY': '¥',
+            'INR': '₹',
+            'CAD': '$',
+            'AUD': '$',
+            'CNY': '¥',
+            'CHF': 'Fr',
+            'SGD': '$',
+            'AED': 'د.إ',
+            'SAR': '﷼'
+        };
+
+        // Quick amount values for different currencies
+        const currencyQuickAmounts = {
+            'USD': [5, 10, 20, 50, 100],
+            'EUR': [5, 10, 20, 50, 100],
+            'GBP': [5, 10, 20, 50, 100],
+            'JPY': [500, 1000, 2000, 5000, 10000],
+            'INR': [100, 200, 500, 1000, 2000],
+            'CAD': [5, 10, 20, 50, 100],
+            'AUD': [5, 10, 20, 50, 100],
+            'CNY': [20, 50, 100, 200, 500],
+            'CHF': [5, 10, 20, 50, 100],
+            'SGD': [5, 10, 20, 50, 100],
+            'AED': [20, 50, 100, 200, 500],
+            'SAR': [20, 50, 100, 200, 500]
+        };
+
+        function getCurrencySymbol() {
+            return currencySymbols[userProfile.currency] || '$';
+        }
+
+        function formatCurrency(amount) {
+            const symbol = getCurrencySymbol();
+            return `${symbol}${amount.toFixed(2)}`;
+        }
+
+        function getQuickAmounts() {
+            return currencyQuickAmounts[userProfile.currency] || [5, 10, 20, 50, 100];
+        }
 
         // Set today's date as default
         document.getElementById('date').valueAsDate = new Date();
@@ -1618,17 +1761,14 @@
                     amountInput.value = '';
                     amountInput.focus();
                     lastClickedBtn = null;
+                } else if (!amount) {
+                    // Skip for clear button (handled separately)
+                    return;
                 } else {
-                    // Check if clicking the same button again
-                    if(lastClickedBtn === this && amountInput.value !== '') {
-                        // Add to existing amount
-                        const currentAmount = parseFloat(amountInput.value) || 0;
-                        const addAmount = parseFloat(amount);
-                        amountInput.value = (currentAmount + addAmount).toFixed(2);
-                    } else {
-                        // First click or different button - set the amount
-                        amountInput.value = amount;
-                    }
+                    // Always add to existing amount (additive behavior)
+                    const currentAmount = parseFloat(amountInput.value) || 0;
+                    const addAmount = parseFloat(amount);
+                    amountInput.value = (currentAmount + addAmount).toFixed(2);
                     
                     // Update active state
                     quickAmountBtns.forEach(b => b.classList.remove('active'));
@@ -1637,6 +1777,14 @@
                 }
             });
         });
+
+        // Clear amount function
+        function clearAmount() {
+            amountInput.value = '';
+            quickAmountBtns.forEach(b => b.classList.remove('active'));
+            document.querySelector('.quick-amount-btn[data-amount="custom"]').classList.add('active');
+            lastClickedBtn = null;
+        }
 
         // When user types in custom amount, activate custom button
         amountInput.addEventListener('input', function() {
@@ -1771,7 +1919,7 @@
                     </div>
                     <div class="transaction-actions">
                         <span class="transaction-amount ${t.type}">
-                            ${t.type === 'income' ? '+' : '-'}$${t.amount.toFixed(2)}
+                            ${t.type === 'income' ? '+' : '-'}${formatCurrency(t.amount).replace(/^\$/, '')}
                         </span>
                         <button class="btn btn-warning" onclick="editTransaction(${t.id})">✏️</button>
                         <button class="btn btn-danger" onclick="deleteTransaction(${t.id})">🗑️</button>
@@ -1870,9 +2018,9 @@
 
             const balance = income - expenses;
 
-            document.getElementById('totalIncome').textContent = `$${income.toFixed(2)}`;
-            document.getElementById('totalExpenses').textContent = `$${expenses.toFixed(2)}`;
-            document.getElementById('balance').textContent = `$${balance.toFixed(2)}`;
+            document.getElementById('totalIncome').textContent = formatCurrency(income);
+            document.getElementById('totalExpenses').textContent = formatCurrency(expenses);
+            document.getElementById('balance').textContent = formatCurrency(balance);
 
             // Update budget progress
             if (monthlyBudget > 0) {
@@ -1882,7 +2030,7 @@
                 const statusElement = document.getElementById('budgetStatus');
                 
                 progressBar.style.width = Math.min(percentage, 100) + '%';
-                percentageText.textContent = `$${expenses.toFixed(2)} (${percentage.toFixed(1)}%)`;
+                percentageText.textContent = `${percentage.toFixed(1)}%`;
                 
                 // Remove all classes
                 progressBar.classList.remove('warning', 'over');
@@ -1890,17 +2038,17 @@
                 if (percentage > 100) {
                     progressBar.classList.add('over');
                     statusElement.innerHTML = 
-                        `<span style="color: #ef4444;">Over budget by $${(expenses - monthlyBudget).toFixed(2)}</span>`;
+                        `<span style="color: #ef4444;">Over budget by ${formatCurrency(expenses - monthlyBudget)}</span>`;
                 } else if (percentage > 80) {
                     progressBar.classList.add('warning');
                     statusElement.innerHTML = 
-                        `<span style="color: #f59e0b;">Remaining: $${(monthlyBudget - expenses).toFixed(2)}</span>`;
+                        `<span style="color: #f59e0b;">Remaining: ${formatCurrency(monthlyBudget - expenses)}</span>`;
                 } else {
                     statusElement.innerHTML = 
-                        `<span style="color: #10b981;">Remaining: $${(monthlyBudget - expenses).toFixed(2)}</span>`;
+                        `<span style="color: #10b981;">Remaining: ${formatCurrency(monthlyBudget - expenses)}</span>`;
                 }
             } else {
-                document.getElementById('budgetPercentageText').textContent = '$0.00';
+                document.getElementById('budgetPercentageText').textContent = formatCurrency(0);
                 document.getElementById('budgetStatus').innerHTML = '';
             }
         }
@@ -2108,9 +2256,209 @@
             document.getElementById('profilePhone').value = userProfile.phone;
             document.getElementById('profileUniversity').value = userProfile.university;
             document.getElementById('profileStudentId').value = userProfile.studentId;
+            document.getElementById('profileCurrency').value = userProfile.currency;
             
             // Update avatar display
             updateAvatarDisplay();
+            displayCustomCategories();
+        }
+
+        // Add custom category
+        function addCustomCategory() {
+            try {
+                const input = document.getElementById('newCategoryInput');
+                const typeSelect = document.getElementById('newCategoryType');
+                
+                if (!input || !typeSelect) {
+                    console.error('Input elements not found');
+                    return;
+                }
+                
+                const categoryName = input.value.trim();
+                const categoryType = typeSelect.value;
+                
+                if (!categoryName) {
+                    alert('Please enter a category name');
+                    return;
+                }
+                
+                // Initialize customCategories if it doesn't exist or is old format
+                if (!userProfile.customCategories || Array.isArray(userProfile.customCategories)) {
+                    userProfile.customCategories = {
+                        expense: [],
+                        income: []
+                    };
+                }
+                
+                const lowerCaseName = categoryName.toLowerCase();
+                
+                // Check if category already exists in either type
+                const allCategories = [...userProfile.customCategories.expense, ...userProfile.customCategories.income];
+                if (allCategories.includes(lowerCaseName)) {
+                    alert('This category already exists');
+                    return;
+                }
+                
+                // Add to profile based on type
+                userProfile.customCategories[categoryType].push(lowerCaseName);
+                localStorage.setItem('userProfile', JSON.stringify(userProfile));
+                
+                // Clear input and refresh display
+                input.value = '';
+                displayCustomCategories();
+                updateCategoryOptions();
+                
+                console.log('Category added successfully:', categoryName, 'as', categoryType);
+            } catch (error) {
+                console.error('Error adding category:', error);
+                alert('Error adding category. Please try again.');
+            }
+        }
+
+        // Display custom categories
+        function displayCustomCategories() {
+            try {
+                const container = document.getElementById('customCategoriesList');
+                if (!container) {
+                    console.error('Categories list container not found');
+                    return;
+                }
+                
+                // Initialize customCategories if it doesn't exist or is old format
+                if (!userProfile.customCategories || Array.isArray(userProfile.customCategories)) {
+                    userProfile.customCategories = {
+                        expense: [],
+                        income: []
+                    };
+                }
+                
+                const expenseCategories = userProfile.customCategories.expense || [];
+                const incomeCategories = userProfile.customCategories.income || [];
+                
+                if (expenseCategories.length === 0 && incomeCategories.length === 0) {
+                    container.innerHTML = '<span style="color: #808080; font-size: 0.9em;">No custom categories added yet</span>';
+                    return;
+                }
+                
+                let html = '';
+                
+                // Display expense categories
+                if (expenseCategories.length > 0) {
+                    html += '<div style="width: 100%; margin-bottom: 10px;"><span style="color: #b0b0b0; font-size: 0.85em; font-weight: 600;">EXPENSE CATEGORIES:</span></div>';
+                    html += expenseCategories.map(cat => `
+                        <div class="custom-category-tag" style="background: #2a1a0a; border-color: #3d2912;">
+                            ${cat.charAt(0).toUpperCase() + cat.slice(1)}
+                            <button class="custom-category-remove" onclick="removeCustomCategory('${cat}', 'expense')">×</button>
+                        </div>
+                    `).join('');
+                }
+                
+                // Display income categories
+                if (incomeCategories.length > 0) {
+                    html += '<div style="width: 100%; margin-top: 15px; margin-bottom: 10px;"><span style="color: #b0b0b0; font-size: 0.85em; font-weight: 600;">INCOME CATEGORIES:</span></div>';
+                    html += incomeCategories.map(cat => `
+                        <div class="custom-category-tag" style="background: #0a1f1a; border-color: #1a3d2e;">
+                            ${cat.charAt(0).toUpperCase() + cat.slice(1)}
+                            <button class="custom-category-remove" onclick="removeCustomCategory('${cat}', 'income')">×</button>
+                        </div>
+                    `).join('');
+                }
+                
+                container.innerHTML = html;
+            } catch (error) {
+                console.error('Error displaying categories:', error);
+            }
+        }
+
+        // Remove custom category
+        function removeCustomCategory(categoryName, type) {
+            if (confirm(`Remove category "${categoryName}"?`)) {
+                if (!userProfile.customCategories || Array.isArray(userProfile.customCategories)) {
+                    userProfile.customCategories = {
+                        expense: [],
+                        income: []
+                    };
+                }
+                
+                userProfile.customCategories[type] = userProfile.customCategories[type].filter(c => c !== categoryName);
+                localStorage.setItem('userProfile', JSON.stringify(userProfile));
+                displayCustomCategories();
+                updateCategoryOptions();
+            }
+        }
+
+        // Update category dropdown in transaction form
+        function updateCategoryDropdown() {
+            updateCategoryOptions();
+        }
+
+        // Update category options based on transaction type
+        function updateCategoryOptions() {
+            const categorySelect = document.getElementById('category');
+            const typeSelect = document.getElementById('type');
+            const currentValue = categorySelect.value;
+            const selectedType = typeSelect.value;
+            
+            // Initialize customCategories if it doesn't exist or is old format
+            if (!userProfile.customCategories || Array.isArray(userProfile.customCategories)) {
+                userProfile.customCategories = {
+                    expense: [],
+                    income: []
+                };
+            }
+            
+            let optionsHTML = '';
+            
+            if (selectedType === 'expense') {
+                // Show only expense categories
+                optionsHTML = `
+                    <optgroup label="Expense Categories">
+                        <option value="food">Food & Dining</option>
+                        <option value="transport">Transportation</option>
+                        <option value="education">Education</option>
+                        <option value="entertainment">Entertainment</option>
+                        <option value="housing">Housing</option>
+                        <option value="other">Other</option>
+                    </optgroup>
+                `;
+                
+                // Add custom expense categories if any exist
+                if (userProfile.customCategories.expense && userProfile.customCategories.expense.length > 0) {
+                    optionsHTML += '<optgroup label="Custom Expense Categories">';
+                    userProfile.customCategories.expense.forEach(cat => {
+                        optionsHTML += `<option value="${cat}">${cat.charAt(0).toUpperCase() + cat.slice(1)}</option>`;
+                    });
+                    optionsHTML += '</optgroup>';
+                }
+            } else {
+                // Show only income categories
+                optionsHTML = `
+                    <optgroup label="Income Categories">
+                        <option value="scholarship">Scholarship</option>
+                        <option value="allowance">Allowance</option>
+                        <option value="parttime">Part-time Job</option>
+                    </optgroup>
+                `;
+                
+                // Add custom income categories if any exist
+                if (userProfile.customCategories.income && userProfile.customCategories.income.length > 0) {
+                    optionsHTML += '<optgroup label="Custom Income Categories">';
+                    userProfile.customCategories.income.forEach(cat => {
+                        optionsHTML += `<option value="${cat}">${cat.charAt(0).toUpperCase() + cat.slice(1)}</option>`;
+                    });
+                    optionsHTML += '</optgroup>';
+                }
+            }
+            
+            categorySelect.innerHTML = optionsHTML;
+            
+            // Restore previous selection if it still exists
+            if (currentValue) {
+                const options = Array.from(categorySelect.options).map(opt => opt.value);
+                if (options.includes(currentValue)) {
+                    categorySelect.value = currentValue;
+                }
+            }
         }
 
         // Handle avatar upload
@@ -2195,12 +2543,18 @@
             userProfile.phone = document.getElementById('profilePhone').value;
             userProfile.university = document.getElementById('profileUniversity').value;
             userProfile.studentId = document.getElementById('profileStudentId').value;
+            userProfile.currency = document.getElementById('profileCurrency').value;
 
             localStorage.setItem('userProfile', JSON.stringify(userProfile));
             
             // Update display
-            document.getElementById('profileNameDisplay').textContent = userProfile.name;
             updateAvatarDisplay();
+            
+            // Update all currency displays
+            updateCurrencyLabel();
+            updateCategoryDropdown();
+            updateDashboard();
+            displayTransactions();
 
             closeProfileModal();
             alert('Profile updated successfully!');
@@ -2214,6 +2568,28 @@
             }
         }
 
+        // Update currency symbol in form label and quick amounts
+        function updateCurrencyLabel() {
+            const symbol = getCurrencySymbol();
+            document.getElementById('currencyLabel').textContent = symbol;
+            
+            // Update quick amount buttons
+            const amounts = getQuickAmounts();
+            const buttons = document.querySelectorAll('.quick-amount-btn:not([data-amount="custom"])');
+            
+            buttons.forEach((btn, index) => {
+                if (index < amounts.length) {
+                    btn.setAttribute('data-amount', amounts[index]);
+                    btn.innerHTML = `<span class="amount-symbol">${symbol}</span>${amounts[index]}`;
+                }
+            });
+            
+            // Reset any active button
+            quickAmountBtns.forEach(b => b.classList.remove('active'));
+            document.querySelector('.quick-amount-btn[data-amount="custom"]').classList.add('active');
+            lastClickedBtn = null;
+        }
+
         // Initialize on load
         window.addEventListener('load', function() {
             updateDashboard();
@@ -2221,8 +2597,9 @@
             updateCharts();
             
             // Load profile
-            document.getElementById('profileNameDisplay').textContent = userProfile.name;
             updateAvatarDisplay();
+            updateCurrencyLabel();
+            updateCategoryDropdown();
         });
     </script>
 </body>
