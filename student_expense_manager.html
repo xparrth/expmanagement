@@ -1784,7 +1784,7 @@
                 </div>
                 <input type="file" id="avatarUpload" class="avatar-upload-btn" accept="image/*" onchange="handleAvatarUpload(event)">
                 <div style="display: flex; gap: 10px; justify-content: center; margin-bottom: 20px;">
-                    <button type="button" class="change-photo-btn" onclick="document.getElementById('avatarUpload').click()">Change Photo</button>
+                    <button type="button" class="change-photo-btn" id="changePhotoBtn" onclick="document.getElementById('avatarUpload').click()">Upload Photo</button>
                     <button type="button" class="remove-photo-btn" id="removePhotoBtn" onclick="removeProfilePhoto()" style="display: none;">Remove Photo</button>
                 </div>
                 <form class="profile-form" id="profileForm">
@@ -2503,6 +2503,13 @@
         }
 
         // Update dashboard
+        // Cache previous values to prevent unnecessary updates
+        let lastDashboardValues = {
+            income: null,
+            expenses: null,
+            balance: null
+        };
+
         function updateDashboard() {
             // Group transactions by currency
             const currentCurrency = userProfile.currency;
@@ -2518,9 +2525,25 @@
 
             const balance = income - expenses;
 
-            document.getElementById('totalIncome').textContent = formatCurrency(income);
-            document.getElementById('totalExpenses').textContent = formatCurrency(expenses);
-            document.getElementById('balance').textContent = formatCurrency(balance);
+            // Only update if values have changed
+            const incomeText = formatCurrency(income);
+            const expensesText = formatCurrency(expenses);
+            const balanceText = formatCurrency(balance);
+
+            if (lastDashboardValues.income !== incomeText) {
+                document.getElementById('totalIncome').textContent = incomeText;
+                lastDashboardValues.income = incomeText;
+            }
+
+            if (lastDashboardValues.expenses !== expensesText) {
+                document.getElementById('totalExpenses').textContent = expensesText;
+                lastDashboardValues.expenses = expensesText;
+            }
+
+            if (lastDashboardValues.balance !== balanceText) {
+                document.getElementById('balance').textContent = balanceText;
+                lastDashboardValues.balance = balanceText;
+            }
 
             // Update budget progress
             if (monthlyBudget > 0) {
@@ -2893,8 +2916,8 @@
             document.getElementById('profileStudentId').value = userProfile.studentId;
             document.getElementById('profileCurrency').value = userProfile.currency;
             
-            // Update avatar display
-            updateAvatarDisplay();
+            // Update avatar display ONLY in modal (not header)
+            updateModalAvatarDisplay();
             displayCustomCategories();
             
             // Update institution list if type is set
@@ -3250,40 +3273,127 @@
         }
 
         // Handle avatar upload
+        // Temporary storage for preview
+        let tempAvatarPreview = null;
+
         function handleAvatarUpload(event) {
             const file = event.target.files[0];
             if (file) {
                 // Check file size (max 5MB)
                 if (file.size > 5 * 1024 * 1024) {
                     alert('File size should be less than 5MB');
+                    event.target.value = '';
                     return;
                 }
 
                 // Check file type
                 if (!file.type.startsWith('image/')) {
                     alert('Please upload an image file');
+                    event.target.value = '';
                     return;
                 }
 
                 const reader = new FileReader();
                 reader.onload = function(e) {
-                    userProfile.avatar = e.target.result;
-                    updateAvatarDisplay();
+                    // Store in temporary preview (don't save to userProfile yet)
+                    tempAvatarPreview = e.target.result;
+                    
+                    // Show preview in modal only
+                    const avatarDisplay = document.getElementById('avatarDisplay');
+                    const avatarText = document.getElementById('avatarText');
+                    const changeBtn = document.getElementById('changePhotoBtn');
+                    
+                    avatarDisplay.style.backgroundImage = `url(${tempAvatarPreview})`;
+                    avatarDisplay.style.backgroundSize = 'cover';
+                    avatarDisplay.style.backgroundPosition = 'center';
+                    avatarText.style.display = 'none';
+                    
                     document.getElementById('removePhotoBtn').style.display = 'block';
+                    changeBtn.textContent = 'Change Photo';
+                    
+                    // Show preview indicator
+                    const previewIndicator = document.createElement('div');
+                    previewIndicator.id = 'photoPreviewIndicator';
+                    previewIndicator.style.cssText = 'background: rgba(37, 99, 235, 0.9); color: white; padding: 8px 15px; border-radius: 20px; font-size: 0.85em; margin-top: 10px; display: inline-block;';
+                    previewIndicator.textContent = '📷 Preview - Click "Save Changes" to apply';
+                    
+                    // Remove existing indicator if any
+                    const existing = document.getElementById('photoPreviewIndicator');
+                    if (existing) existing.remove();
+                    
+                    // Add new indicator
+                    avatarDisplay.parentElement.appendChild(previewIndicator);
                 };
                 reader.readAsDataURL(file);
             }
         }
 
-        // Remove profile photo
+        // Flag to mark photo for removal
+        let markPhotoForRemoval = false;
+
+        // Remove profile photo (preview or mark for removal)
         function removeProfilePhoto() {
-            userProfile.avatar = null;
-            updateAvatarDisplay();
+            // Clear temporary preview
+            tempAvatarPreview = null;
+            
+            // Mark for removal if there's a saved avatar
+            if (userProfile.avatar) {
+                markPhotoForRemoval = true;
+            }
+            
+            // Reset avatar display in modal to show initial letter
+            const avatarDisplay = document.getElementById('avatarDisplay');
+            const avatarText = document.getElementById('avatarText');
+            const changeBtn = document.getElementById('changePhotoBtn');
+            
+            avatarDisplay.style.backgroundImage = 'none';
+            avatarText.style.display = 'flex';
+            avatarText.textContent = (userProfile.name || 'S').charAt(0).toUpperCase();
+            
             document.getElementById('avatarUpload').value = '';
             document.getElementById('removePhotoBtn').style.display = 'none';
+            changeBtn.textContent = 'Upload Photo';
+            
+            // Remove preview indicator
+            const previewIndicator = document.getElementById('photoPreviewIndicator');
+            if (previewIndicator) previewIndicator.remove();
+            
+            // Show removal indicator
+            const removalIndicator = document.createElement('div');
+            removalIndicator.id = 'photoRemovalIndicator';
+            removalIndicator.style.cssText = 'background: rgba(239, 68, 68, 0.9); color: white; padding: 8px 15px; border-radius: 20px; font-size: 0.85em; margin-top: 10px; display: inline-block;';
+            removalIndicator.textContent = '🗑️ Photo will be removed - Click "Save Changes" to apply';
+            
+            avatarDisplay.parentElement.appendChild(removalIndicator);
         }
 
-        // Update avatar display in modal and header
+        // Update avatar display ONLY in modal (for previewing)
+        function updateModalAvatarDisplay() {
+            const avatarDisplay = document.getElementById('avatarDisplay');
+            const avatarText = document.getElementById('avatarText');
+            const removeBtn = document.getElementById('removePhotoBtn');
+            const changeBtn = document.getElementById('changePhotoBtn');
+
+            if (userProfile.avatar) {
+                // Show saved image in modal
+                avatarDisplay.style.backgroundImage = `url(${userProfile.avatar})`;
+                avatarDisplay.style.backgroundSize = 'cover';
+                avatarDisplay.style.backgroundPosition = 'center';
+                avatarText.style.display = 'none';
+                removeBtn.style.display = 'block';
+                changeBtn.textContent = 'Change Photo';
+            } else {
+                // Show initials in modal
+                const initial = (userProfile.name || 'S').charAt(0).toUpperCase();
+                avatarDisplay.style.backgroundImage = 'none';
+                avatarText.textContent = initial;
+                avatarText.style.display = 'flex';
+                removeBtn.style.display = 'none';
+                changeBtn.textContent = 'Upload Photo';
+            }
+        }
+
+        // Update avatar display in modal AND header (after saving)
         function updateAvatarDisplay() {
             const avatarDisplay = document.getElementById('avatarDisplay');
             const avatarText = document.getElementById('avatarText');
@@ -3292,13 +3402,13 @@
             const removeBtn = document.getElementById('removePhotoBtn');
 
             if (userProfile.avatar) {
-                // Show image
+                // Show image in both modal and header
                 avatarDisplay.style.backgroundImage = `url(${userProfile.avatar})`;
                 avatarDisplay.style.backgroundSize = 'cover';
                 avatarDisplay.style.backgroundPosition = 'center';
                 avatarText.style.display = 'none';
                 
-                // Update small avatar
+                // Update small avatar (header)
                 avatarSmall.style.backgroundImage = `url(${userProfile.avatar})`;
                 avatarSmall.style.backgroundSize = 'cover';
                 avatarSmall.style.backgroundPosition = 'center';
@@ -3306,13 +3416,13 @@
                 
                 removeBtn.style.display = 'block';
             } else {
-                // Show initials
-                const initial = userProfile.name.charAt(0).toUpperCase();
+                // Show initials in both modal and header
+                const initial = (userProfile.name || 'S').charAt(0).toUpperCase();
                 avatarDisplay.style.backgroundImage = 'none';
                 avatarText.textContent = initial;
                 avatarText.style.display = 'flex';
                 
-                // Update small avatar
+                // Update small avatar (header)
                 avatarSmall.style.backgroundImage = 'none';
                 avatarSmallText.textContent = initial;
                 avatarSmallText.style.display = 'flex';
@@ -3322,6 +3432,44 @@
         }
 
         function closeProfileModal() {
+            // Reset preview if user cancels without saving
+            if (tempAvatarPreview !== null || markPhotoForRemoval) {
+                tempAvatarPreview = null;
+                markPhotoForRemoval = false;
+                
+                // Reset modal avatar display
+                const avatarDisplay = document.getElementById('avatarDisplay');
+                const avatarText = document.getElementById('avatarText');
+                
+                if (userProfile.avatar) {
+                    avatarDisplay.style.backgroundImage = `url(${userProfile.avatar})`;
+                    avatarDisplay.style.backgroundSize = 'cover';
+                    avatarDisplay.style.backgroundPosition = 'center';
+                    avatarText.style.display = 'none';
+                } else {
+                    avatarDisplay.style.backgroundImage = 'none';
+                    avatarText.style.display = 'flex';
+                    avatarText.textContent = (userProfile.name || 'S').charAt(0).toUpperCase();
+                }
+                
+                // Clear file input
+                document.getElementById('avatarUpload').value = '';
+                
+                // Remove preview indicator
+                const previewIndicator = document.getElementById('photoPreviewIndicator');
+                if (previewIndicator) previewIndicator.remove();
+                
+                // Remove removal indicator
+                const removalIndicator = document.getElementById('photoRemovalIndicator');
+                if (removalIndicator) removalIndicator.remove();
+                
+                // Show/hide remove button based on saved avatar
+                const removeBtn = document.getElementById('removePhotoBtn');
+                if (removeBtn) {
+                    removeBtn.style.display = userProfile.avatar ? 'block' : 'none';
+                }
+            }
+            
             document.getElementById('profileModal').style.display = 'none';
         }
 
@@ -3337,7 +3485,27 @@
             // Currency is locked and cannot be changed
             // userProfile.currency remains unchanged
 
+            // Apply the avatar preview if exists
+            if (tempAvatarPreview !== null) {
+                userProfile.avatar = tempAvatarPreview;
+                tempAvatarPreview = null; // Clear temp after saving
+            }
+            
+            // Remove avatar if marked for removal
+            if (markPhotoForRemoval) {
+                userProfile.avatar = null;
+                markPhotoForRemoval = false; // Reset flag
+            }
+
             localStorage.setItem('userProfile', JSON.stringify(userProfile));
+            
+            // Remove preview indicator
+            const previewIndicator = document.getElementById('photoPreviewIndicator');
+            if (previewIndicator) previewIndicator.remove();
+            
+            // Remove removal indicator
+            const removalIndicator = document.getElementById('photoRemovalIndicator');
+            if (removalIndicator) removalIndicator.remove();
             
             // Update display
             updateAvatarDisplay();
