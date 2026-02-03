@@ -1,0 +1,289 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Add Expense | Expense Manager{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/modern_base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/add_expense.css' %}">
+</head>
+
+<body>
+    <div class="page-wrapper">
+        {% block content %}
+        <div class="form-container fade-in">
+            <!-- Main Card -->
+            <div class="card form-card">
+                {% if user.is_authenticated %}
+                <form method="post" action="{% url 'dashboard' %}" class="back-button-inline-form">
+                    {% csrf_token %}
+                    <button type="submit" class="btn-back-form">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M19 12H5M5 12L12 19M5 12L12 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        Back
+                    </button>
+                </form>
+                {% endif %}
+                <div class="card-header">
+                    <div class="icon-container">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="12" cy="12" r="10" stroke="url(#gradient2)" stroke-width="2"/>
+                            <path d="M12 8v8M8 12h8" stroke="url(#gradient2)" stroke-width="2" stroke-linecap="round"/>
+                            <defs>
+                                <linearGradient id="gradient2" x1="2" y1="2" x2="22" y2="22" gradientUnits="userSpaceOnUse">
+                                    <stop stop-color="#6366f1"/>
+                                    <stop offset="1" stop-color="#14b8a6"/>
+                                </linearGradient>
+                            </defs>
+                        </svg>
+                    </div>
+                    <h1 class="card-title">Add New Expense</h1>
+                    <p class="card-subtitle">Record your expense details</p>
+                </div>
+
+                <form method="post" class="expense-form" id="expenseForm" novalidate>
+                    {% csrf_token %}
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="id_amount">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <line x1="12" y1="1" x2="12" y2="23" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                                Amount *
+                            </label>
+                            <input type="number" name="amount" step="0.01" required id="id_amount" class="form-control" placeholder="Enter amount">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="id_date">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <line x1="16" y1="2" x2="16" y2="6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <line x1="8" y1="2" x2="8" y2="6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <line x1="3" y1="10" x2="21" y2="10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                                Date *
+                            </label>
+                            <input type="date" name="date" required id="id_date" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="id_category">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            Category *
+                        </label>
+                        <select name="category" required id="id_category" class="form-control">
+                            <option value="">Select a category</option>
+                            <option value="Food">Food</option>
+                            <option value="Transport">Transport</option>
+                            <option value="Shopping">Shopping</option>
+                            <option value="Entertainment">Entertainment</option>
+                            <option value="Bills">Bills</option>
+                            <option value="Healthcare">Healthcare</option>
+                            <option value="Education">Education</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="id_description">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <polyline points="14 2 14 8 20 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <line x1="16" y1="13" x2="8" y2="13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <line x1="16" y1="17" x2="8" y2="17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <polyline points="10 9 9 9 8 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            Description *
+                        </label>
+                        <textarea name="description" required id="id_description" class="form-control" rows="4" placeholder="Add a description"></textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-block btn-lg">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        Add Expense
+                    </button>
+                </form>
+            </div>
+        </div>
+        {% endblock %}
+    </div>
+
+    <script>
+        // Custom form validation with popup
+        document.getElementById('expenseForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form fields
+            const amount = document.getElementById('id_amount');
+            const date = document.getElementById('id_date');
+            const category = document.getElementById('id_category');
+            const description = document.getElementById('id_description');
+            
+            // Reset any previous error styles
+            [amount, date, category, description].forEach(field => {
+                field.style.borderColor = '';
+                field.style.boxShadow = '';
+            });
+            
+            // Validate fields
+            let errors = [];
+            
+            if (!amount.value || parseFloat(amount.value) <= 0) {
+                errors.push('Please enter a valid amount');
+                amount.style.borderColor = '#ef4444';
+                amount.style.boxShadow = '0 0 0 3px rgba(239, 68, 68, 0.1)';
+            }
+            
+            if (!date.value) {
+                errors.push('Please select a date');
+                date.style.borderColor = '#ef4444';
+                date.style.boxShadow = '0 0 0 3px rgba(239, 68, 68, 0.1)';
+            }
+            
+            if (!category.value) {
+                errors.push('Please select a category');
+                category.style.borderColor = '#ef4444';
+                category.style.boxShadow = '0 0 0 3px rgba(239, 68, 68, 0.1)';
+            }
+            
+            if (!description.value.trim()) {
+                errors.push('Please add a description');
+                description.style.borderColor = '#ef4444';
+                description.style.boxShadow = '0 0 0 3px rgba(239, 68, 68, 0.1)';
+            }
+            
+            // Show errors or submit
+            if (errors.length > 0) {
+                showValidationPopup(errors);
+            } else {
+                // All valid, submit the form
+                this.submit();
+            }
+        });
+        
+        // Show custom validation popup
+        function showValidationPopup(errors) {
+            // Create overlay
+            const overlay = document.createElement('div');
+            overlay.className = 'validation-popup-overlay';
+            overlay.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.6);
+                backdrop-filter: blur(4px);
+                z-index: 10000;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                animation: fadeIn 0.3s ease;
+            `;
+            
+            // Create popup
+            const popup = document.createElement('div');
+            popup.style.cssText = `
+                background: linear-gradient(135deg, #1e1e1e 0%, #2a2a2a 100%);
+                border-radius: 20px;
+                padding: 30px;
+                min-width: 320px;
+                max-width: 500px;
+                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+                text-align: center;
+                animation: slideUp 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+                border: 1px solid rgba(255, 255, 255, 0.1);
+            `;
+            
+            popup.innerHTML = `
+                <div style="font-size: 64px; margin-bottom: 20px; animation: bounceIn 0.6s ease; color: #ef4444;">
+                    ⚠️
+                </div>
+                <div style="font-size: 24px; font-weight: 700; color: #ffffff; margin-bottom: 12px;">
+                    Missing Information
+                </div>
+                <div style="font-size: 16px; color: #a0a0a0; margin-bottom: 25px; line-height: 1.6;">
+                    ${errors.join('<br>')}
+                </div>
+                <button onclick="this.closest('.validation-popup-overlay').remove()" style="
+                    padding: 12px 32px;
+                    border: none;
+                    border-radius: 12px;
+                    font-size: 16px;
+                    font-weight: 600;
+                    cursor: pointer;
+                    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+                    color: white;
+                    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4);
+                    transition: all 0.3s ease;
+                    min-width: 100px;
+                ">
+                    Got it
+                </button>
+            `;
+            
+            overlay.appendChild(popup);
+            document.body.appendChild(overlay);
+            
+            // Close on overlay click
+            overlay.addEventListener('click', function(e) {
+                if (e.target === overlay) {
+                    overlay.remove();
+                }
+            });
+            
+            // Close on ESC key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    overlay.remove();
+                }
+            }, { once: true });
+        }
+        
+        // Add animations
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fadeIn {
+                from { opacity: 0; }
+                to { opacity: 1; }
+            }
+            @keyframes slideUp {
+                from {
+                    opacity: 0;
+                    transform: translateY(50px) scale(0.9);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0) scale(1);
+                }
+            }
+            @keyframes bounceIn {
+                0% {
+                    opacity: 0;
+                    transform: scale(0.3);
+                }
+                50% {
+                    opacity: 1;
+                    transform: scale(1.1);
+                }
+                100% {
+                    transform: scale(1);
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+
+</html>

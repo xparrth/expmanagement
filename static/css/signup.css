@@ -1,0 +1,125 @@
+/* ============================================
+   SIGNUP PAGE - MODERN DESIGN
+   ============================================ */
+
+.auth-container {
+    width: 100%;
+    max-width: 480px;
+    margin: 0 auto;
+}
+
+.auth-card {
+    width: 100%;
+}
+
+.logo-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: var(--spacing-lg);
+}
+
+.logo-icon {
+    width: 64px;
+    height: 64px;
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(20, 184, 166, 0.1));
+    border-radius: var(--radius-xl);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--primary-color);
+}
+
+.auth-form {
+    margin-top: var(--spacing-xl);
+}
+
+.form-text {
+    display: block;
+    margin-top: var(--spacing-xs);
+    font-size: 0.75rem;
+    color: var(--text-tertiary);
+    line-height: 1.4;
+}
+
+.auth-footer {
+    margin-top: var(--spacing-xl);
+    text-align: center;
+    padding-top: var(--spacing-lg);
+    border-top: 1px solid var(--gray-200);
+}
+
+.auth-footer p {
+    margin: 0;
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+}
+
+.auth-link {
+    font-weight: 600;
+    color: var(--primary-color);
+    transition: color var(--transition-fast);
+}
+
+.auth-link:hover {
+    color: var(--primary-dark);
+    text-decoration: underline;
+}
+
+.logout-float {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 100;
+}
+
+/* Alert Messages */
+.alert {
+    padding: var(--spacing-md);
+    border-radius: var(--radius-lg);
+    margin-bottom: var(--spacing-lg);
+    font-size: 0.9rem;
+}
+
+.alert-danger {
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    color: var(--danger);
+}
+
+.alert p {
+    margin: 0;
+    color: inherit;
+}
+
+/* Form Fields */
+#id_username,
+#id_password1,
+#id_password2 {
+    width: 100%;
+}
+
+/* Button Icon */
+.btn svg {
+    transition: transform var(--transition-fast);
+}
+
+.btn:hover svg {
+    transform: translateX(4px);
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+    .auth-container {
+        max-width: 100%;
+    }
+    
+    .logo-icon {
+        width: 56px;
+        height: 56px;
+    }
+    
+    .logo-icon svg {
+        width: 40px;
+        height: 40px;
+    }
+}

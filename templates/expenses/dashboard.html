@@ -1,0 +1,184 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Dashboard | Expense Manager{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/modern_base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+</head>
+
+<body>
+    <div class="dashboard-wrapper">
+        {% block content %}
+        <!-- Navigation Bar -->
+        <nav class="navbar">
+            <div class="navbar-brand">
+                <div class="logo-icon-small">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 2L2 7L12 12L22 7L12 2Z" fill="currentColor" opacity="0.3"/>
+                        <path d="M2 17L12 22L22 17M2 12L12 17L22 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <span class="brand-text">Expense Manager</span>
+            </div>
+            
+            <div class="navbar-user">
+                <span class="user-name">{{ request.user.username }}</span>
+                {% if user.is_authenticated %}
+                <form method="post" action="{% url 'logout' %}" style="display: inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-sm btn-outline">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        Logout
+                    </button>
+                </form>
+                {% endif %}
+            </div>
+        </nav>
+
+        <!-- Main Dashboard Content -->
+        <div class="dashboard-container">
+            <div class="dashboard-header fade-in">
+                <h1 class="dashboard-title">Welcome Back, {{ request.user.username }}!</h1>
+                <p class="dashboard-subtitle">Manage your expenses efficiently</p>
+            </div>
+
+            <!-- Dashboard Cards Grid -->
+            <div class="dashboard-grid fade-in">
+                <!-- Add Expense Card -->
+                <div class="dashboard-card">
+                    <div class="card-icon card-icon-primary">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                            <path d="M12 8v8M8 12h8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                    <h3 class="card-title">Add Expense</h3>
+                    <p class="card-description">Record a new expense transaction</p>
+                    <form method="post" action="{% url 'add_expense' %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-primary btn-block">
+                            Add New
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </button>
+                    </form>
+                </div>
+
+                <!-- View Expenses Card -->
+                <div class="dashboard-card">
+                    <div class="card-icon card-icon-success">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <polyline points="14 2 14 8 20 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <line x1="16" y1="13" x2="8" y2="13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <line x1="16" y1="17" x2="8" y2="17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <polyline points="10 9 9 9 8 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <h3 class="card-title">View Expenses</h3>
+                    <p class="card-description">Browse all your expense records</p>
+                    <form method="post" action="{% url 'expense_list' %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-success btn-block">
+                            View All
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Monthly Summary Card -->
+                <div class="dashboard-card">
+                    <div class="card-icon card-icon-warning">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <line x1="12" y1="1" x2="12" y2="23" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <h3 class="card-title">Monthly Summary</h3>
+                    <p class="card-description">View spending summary & budget</p>
+                    <form method="post" action="{% url 'monthly_summary' %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-warning btn-block">
+                            View Summary
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Quick Stats Section -->
+            <div class="quick-stats fade-in">
+                <h2 class="section-title">Expense Overview</h2>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon stat-icon-primary">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M22 12h-4l-3 9L9 3l-3 9H2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <div class="stat-content">
+                            <p class="stat-label">Total Expenses</p>
+                            <h3 class="stat-value">₹ {{ total_expense|floatformat:2 }}</h3>
+                            <p class="stat-detail">{{ total_count }} transaction{{ total_count|pluralize }}</p>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon stat-icon-success">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect x="2" y="7" width="20" height="14" rx="2" ry="2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <div class="stat-content">
+                            <p class="stat-label">Monthly Budget</p>
+                            {% if budget_amount > 0 %}
+                                <h3 class="stat-value">₹ {{ remaining_budget|floatformat:2 }}</h3>
+                                <p class="stat-detail {% if remaining_budget < 0 %}stat-danger{% else %}stat-success{% endif %}">
+                                    {% if remaining_budget >= 0 %}
+                                        {{ budget_percentage|floatformat:0 }}% used
+                                    {% else %}
+                                        Exceeded by ₹{{ budget_exceeded|floatformat:2 }}
+                                    {% endif %}
+                                </p>
+                            {% else %}
+                                <h3 class="stat-value">Not Set</h3>
+                                <p class="stat-detail">Set a budget in summary</p>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon stat-icon-warning">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect x="3" y="4" width="18" height="18" rx="2" ry="2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <line x1="16" y1="2" x2="16" y2="6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <line x1="8" y1="2" x2="8" y2="6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <line x1="3" y1="10" x2="21" y2="10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <div class="stat-content">
+                            <p class="stat-label">This Month</p>
+                            <h3 class="stat-value">₹ {{ monthly_total|floatformat:2 }}</h3>
+                            <p class="stat-detail">Current month spending</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endblock %}
+    </div>
+</body>
+
+</html>
