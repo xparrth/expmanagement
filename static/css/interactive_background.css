@@ -1,0 +1,197 @@
+/* ============================================
+   MOLTEN CORE — INTERACTIVE BACKGROUND
+   Animated Lava Blobs & Particle System
+   ============================================ */
+
+/* Background Container */
+.molten-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    overflow: hidden;
+    background: linear-gradient(180deg, #0a0500 0%, #1a0a00 50%, #0f0600 100%);
+}
+
+/* Animated Lava Blobs */
+.lava-blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(60px);
+    opacity: 0.4;
+    animation: float-blob 20s ease-in-out infinite;
+    pointer-events: none;
+}
+
+.lava-blob.blob-1 {
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, #ff6b1a 0%, #ff4500 50%, transparent 70%);
+    top: -200px;
+    left: -200px;
+    animation-duration: 25s;
+    animation-delay: 0s;
+}
+
+.lava-blob.blob-2 {
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, #ff8c42 0%, #ff6b1a 50%, transparent 70%);
+    bottom: -250px;
+    right: -250px;
+    animation-duration: 30s;
+    animation-delay: -5s;
+}
+
+.lava-blob.blob-3 {
+    width: 350px;
+    height: 350px;
+    background: radial-gradient(circle, #ffab00 0%, #ff6b1a 50%, transparent 70%);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation-duration: 35s;
+    animation-delay: -10s;
+}
+
+.lava-blob.blob-4 {
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, #ff4500 0%, #ff2200 50%, transparent 70%);
+    top: 20%;
+    right: 15%;
+    animation-duration: 28s;
+    animation-delay: -15s;
+}
+
+.lava-blob.blob-5 {
+    width: 450px;
+    height: 450px;
+    background: radial-gradient(circle, #ff6b1a 0%, #ff4500 50%, transparent 70%);
+    bottom: 30%;
+    left: 20%;
+    animation-duration: 32s;
+    animation-delay: -20s;
+}
+
+/* Floating Animation */
+@keyframes float-blob {
+    0%, 100% {
+        transform: translate(0, 0) scale(1);
+        opacity: 0.4;
+    }
+    25% {
+        transform: translate(100px, -100px) scale(1.1);
+        opacity: 0.5;
+    }
+    50% {
+        transform: translate(-50px, 150px) scale(0.9);
+        opacity: 0.35;
+    }
+    75% {
+        transform: translate(-150px, -50px) scale(1.05);
+        opacity: 0.45;
+    }
+}
+
+/* Particle Canvas */
+#particle-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+/* Glowing Orbs */
+.glow-orb {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: #ff6b1a;
+    border-radius: 50%;
+    box-shadow: 
+        0 0 10px #ff6b1a,
+        0 0 20px #ff6b1a,
+        0 0 30px rgba(255, 107, 26, 0.5);
+    animation: rise-fade 8s linear infinite;
+    opacity: 0;
+}
+
+@keyframes rise-fade {
+    0% {
+        opacity: 0;
+        transform: translateY(0) scale(0.5);
+    }
+    10% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-100vh) scale(1);
+    }
+}
+
+/* Noise Texture Overlay */
+.noise-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.03;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    pointer-events: none;
+}
+
+/* Gradient Mesh Overlay */
+.gradient-mesh {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        radial-gradient(circle at 20% 80%, rgba(255, 107, 26, 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(255, 140, 66, 0.06) 0%, transparent 50%),
+        radial-gradient(circle at 50% 50%, rgba(255, 69, 0, 0.05) 0%, transparent 70%);
+    pointer-events: none;
+    animation: mesh-shift 20s ease-in-out infinite;
+}
+
+@keyframes mesh-shift {
+    0%, 100% {
+        opacity: 1;
+        transform: scale(1) rotate(0deg);
+    }
+    50% {
+        opacity: 0.8;
+        transform: scale(1.1) rotate(2deg);
+    }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .lava-blob {
+        filter: blur(40px);
+    }
+    
+    .lava-blob.blob-1,
+    .lava-blob.blob-2 {
+        width: 300px;
+        height: 300px;
+    }
+    
+    .lava-blob.blob-3,
+    .lava-blob.blob-4,
+    .lava-blob.blob-5 {
+        width: 250px;
+        height: 250px;
+    }
+}

@@ -8,6 +8,7 @@
     <title>{% block title %}Add Expense | Expense Manager{% endblock %}</title>
     <link rel="stylesheet" href="{% static 'css/modern_base.css' %}">
     <link rel="stylesheet" href="{% static 'css/add_expense.css' %}">
+    <link rel="stylesheet" href="{% static 'css/interactive_background.css' %}">
 </head>
 
 <body>
@@ -284,6 +285,7 @@
         `;
         document.head.appendChild(style);
     </script>
+    <script src="{% static 'js/interactive_background.js' %}"></script>
 </body>
 
 </html>
