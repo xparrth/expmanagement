@@ -91,7 +91,7 @@
 
 ### 📌 Featured project
 
-> **[Student Expense Mansger](https://github.com/xparrth/expmanagement — A full-stack web app built with React and MySQL. [Add a one-line description of what it does.]
+> **[Student Expense Mansger](https://github.com/xparrth/expmanagement — A full-stack web app built with React and MySQL. [A web application that helps any student track their day to day expenses]
 
 ---
 
@@ -111,4 +111,4 @@
 <div align="center">
   <i>Open to collaborations, open source, and interesting side projects.</i>
 </div>
-```
+
